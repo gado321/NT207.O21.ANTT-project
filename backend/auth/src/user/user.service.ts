@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDTO, UserRO } from './user.dto';
 import { UserEntity } from './user.entity';
+import 'dotenv/config' 
 
 @Injectable()
 export class UserService {
@@ -33,8 +34,8 @@ export class UserService {
         return new Promise((resolve, reject) => {
           this.httpService
             .post(
-              `https://dev-ltw8h3ds.us.auth0.com/oauth/token`,
-              `{"client_id":"${process.env.CLIENT_ID}","client_secret":"${process.env.CLIENT_SECRET}","audience":"nestjs-api","grant_type":"client_credentials"}`,
+              `https://dev-xcec5wzp0vxn0k3w.us.auth0.com/oauth/token`,
+              `{"client_id":"${process.env.CLIENT_ID}","client_secret":"${process.env.CLIENT_SECRET}","audience":"api-gateway-demo","grant_type":"client_credentials"}`,
               { headers: { 'content-type': 'application/json' } },
             )
             .subscribe(response => {

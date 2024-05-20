@@ -7,17 +7,19 @@ export const environment = {
   // users
   // urlUsers: "http://localhost:9000/users/",
   // urlUserLogin: "http://localhost:9000/users/login",
-  urlUsers: "api/users",
-  urlUserLogin: "api/users/login",
+  // urlUsers: "api/users",
+  // urlUserLogin: "api/users/login",
+  urlUsers: "http://localhost:8099/users",
+  urlUserLogin: "http://localhost:8099/users/login",
   // urlAddUser: "http://localhost:4000/api/users/register",
   // urlDeleteUser: "http://localhost:4000/api/users/delete/",
   // urlUpdateUser: "http://localhost:4000/api/users/update/",
   // API
-  urlApiCrackend: "http://localhost:9000/api",
-  urlAddRabbit: "http://localhost:9000/clients/produce",
+  urlApiCrakend: "http://localhost:8099/",
+  urlAddRabbit: "http://localhost:8099/produce",
 
   //clients
-  urlClients: "http://localhost:9000/clients/",
+  urlClients: "http://localhost:8099/clients/",
   // urlGetClients: "http://localhost:3000/api/addclients",
   // urlClient: "http://localhost:3000/clients/",
   // urlAddClient: "http://localhost:3000/api/clients/add",
@@ -25,7 +27,7 @@ export const environment = {
   // urlUpdateClient: "http://localhost:3000/api/clients/update/",
 
   //produits
-  urlProduits: "http://localhost:9000/products/",
+  urlProduits: "http://localhost:8099/products/",
 };
 
 /*

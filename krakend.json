@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "host": ["http://localhost:8080"],
+  "host": ["http://localhost:8099"],
   "extra_config": {
     "github_com/devopsfaith/krakend-cors": {
       "allow_origins": ["*"],
@@ -19,12 +19,12 @@
   "timeout": "20000ms",
   "cache_ttl": "2s",
   "name": "api-gateway",
-  "port": 8080,
+  "port": 8099,
 
   "endpoints": [
     {
       "endpoint": "/clients/{id}",
-      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "headers_to_pass": ["Authorization", "Content-Type", "Content-Length", "Accept"],
       "method": "GET",
       "concurrent_calls": 3,
       "output_encoding": "json-collection",
@@ -37,8 +37,9 @@
 
         "github.com/devopsfaith/krakend-jose/validator": {
           "alg": "RS256",
-          "audience": ["nestjs-api"],
-          "jwk-url": "https://dev-ltw8h3ds.us.auth0.com/.well-known/jwks.json"
+          "audience": ["http://localhost:4200"],
+          "jwk-url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true
         }
       },
 
@@ -48,8 +49,8 @@
           "url_pattern": "/api/clients",
 
           "method": "GET",
-          "host": ["http://localhost:3000", "http://localhost:3001"],
-          "is_collection": "true"
+          "host": ["http://localhost:4000", "http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:4200"],
+          "is_collection": true
         }
       ]
     },
@@ -171,10 +172,8 @@
       "endpoint": "/users/login",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "POST",
-      "output_encoding": "json",
       "backend": [
         {
-          "encoding": "json",
           "url_pattern": "/api/users/login",
 
           "method": "POST",

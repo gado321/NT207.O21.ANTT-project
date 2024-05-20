@@ -86,7 +86,7 @@ export class UserEntity {
   // }
 //   private get token() {
 //     // const {id, username} = this
-//     // this.httpService.post(`https://dev-ltw8h3ds.us.auth0.com/oauth/token`,'{"client_id":"8EP5OH518rsS4oJ8nAHilrLwAZBsU37a","client_secret":"_YgLoKaYzhtiGz1KslteoqvYgr8PdIj2uERn73p0v2j58vUD0DvEvlNacvConvDm","audience":"nestjs-api","grant_type":"client_credentials"}', {headers: { 'content-type': 'application/json' }}).subscribe(
+//     // this.httpService.post(`https://dev-xcec5wzp0vxn0k3w.us.auth0.com/oauth/token`,'{"client_id":"8EP5OH518rsS4oJ8nAHilrLwAZBsU37a","client_secret":"_YgLoKaYzhtiGz1KslteoqvYgr8PdIj2uERn73p0v2j58vUD0DvEvlNacvConvDm","audience":"nestjs-api","grant_type":"client_credentials"}', {headers: { 'content-type': 'application/json' }}).subscribe(
 //     //     response =>  {
 //     //       console.log("**************res");
 //     //       console.log(response)
@@ -96,7 +96,7 @@ export class UserEntity {
 //     //   )
 // //     let options = {
 // //       method: 'POST',
-// //       url: 'https://dev-ltw8h3ds.us.auth0.com/oauth/token',
+// //       url: 'https://dev-xcec5wzp0vxn0k3we.us.auth0.com/oauth/token',
 // //       headers: { 'content-type': 'application/json' },
 // //       body: '{"client_id":"8EP5OH518rsS4oJ8nAHilrLwAZBsU37a","client_secret":"_YgLoKaYzhtiGz1KslteoqvYgr8PdIj2uERn73p0v2j58vUD0DvEvlNacvConvDm","audience":"nestjs-api","grant_type":"client_credentials"}',
 // //     };

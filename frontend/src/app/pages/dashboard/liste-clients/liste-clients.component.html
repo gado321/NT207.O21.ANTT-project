@@ -25,7 +25,7 @@
                 <span class="text-success mr-2"
                   ><i class="fa fa-arrow-up"></i> 3.48%</span
                 >
-                <span class="text-nowrap">Depuis le mois dernier</span>
+                <span class="text-nowrap">Since last month</span>
               </p>
             </div>
           </div>
@@ -36,7 +36,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">
-                    CHIFFRE D'AFFAIRE
+                    TURNOVER
                   </h5>
                   <span class="h2 font-weight-bold mb-0">3000K$</span>
                 </div>
@@ -52,7 +52,7 @@
                 <span class="text-danger mr-2"
                   ><i class="fas fa-arrow-down"></i> 3.48%</span
                 >
-                <span class="text-nowrap">Depuis la semaine dernière</span>
+                <span class="text-nowrap">Since last week</span>
               </p>
             </div>
           </div>
@@ -63,7 +63,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">
-                    recouvrement
+                    RECOVERY
                   </h5>
                   <span class="h2 font-weight-bold mb-0">1200K$</span>
                 </div>
@@ -79,7 +79,7 @@
                 <span class="text-warning mr-2"
                   ><i class="fas fa-arrow-down"></i> 1.10%</span
                 >
-                <span class="text-nowrap">Depuis hier</span>
+                <span class="text-nowrap">Since yesterday</span>
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@
                 <span class="text-success mr-2"
                   ><i class="fas fa-arrow-up"></i> 12%</span
                 >
-                <span class="text-nowrap">Depuis le mois dernier</span>
+                <span class="text-nowrap">Since last month</span>
               </p>
             </div>
           </div>
@@ -138,9 +138,9 @@
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0" *ngIf="boolListForm">Entreprises Clientes</h3>
-              <h3 class="mb-0" *ngIf="boolAddForm">Ajouter Entreprise</h3>
-              <h3 class="mb-0" *ngIf="boolEditForm">Editer Entreprise</h3>
+              <h3 class="mb-0" *ngIf="boolListForm">Enterprise Clients</h3>
+              <h3 class="mb-0" *ngIf="boolAddForm">Add Client</h3>
+              <h3 class="mb-0" *ngIf="boolEditForm">Edit Client</h3>
             </div>
 
             <div class="col text-right">
@@ -148,13 +148,13 @@
                 (click)="openAddForm()"
                 class="btn btn-sm btn-primary"
                 *ngIf="boolListForm"
-                >Ajouter</a
+                >Add</a
               >
               <a
                 (click)="closeAddForm()"
                 class="btn btn-sm btn-primary"
                 *ngIf="boolAddForm || boolEditForm"
-                >Annuler</a
+                >Cancel</a
               >
             </div>
           </div>
@@ -170,11 +170,11 @@
                 <tr>
                   <!-- <th scope="col">Id</th> -->
 
-                  <th scope="col">Raison Sociale</th>
+                  <th scope="col">Company Pame</th>
                   <th scope="col">N° Sirette</th>
-                  <th scope="col">Adresse</th>
+                  <th scope="col">Address</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Téléphone</th>
+                  <th scope="col">Phone Number</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -201,14 +201,14 @@
                       class="btn btn-sm btn-outline-success"
                       (click)="updateClient(client)"
                     >
-                      Editer
+                      Edit
                     </button>
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-danger"
                       (click)="deleteClient(client.id)"
                     >
-                      Effacer
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -226,11 +226,11 @@
                   <tr>
                     <th scope="col">Id</th>
 
-                    <th scope="col">Raison Sociale</th>
-                    <th scope="col">N° Sirette</th>
-                    <th scope="col">Adresse</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">N° Sirette</th>f
+                    <th scope="col">Address</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Téléphone</th>
+                    <th scope="col">Phone Number</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -245,7 +245,7 @@
                         type="raison_social"
                         class="form-control editFont"
                         id="exampleFormControlInput1"
-                        placeholder="raison social"
+                        placeholder="Company Name"
                         formControlName="raison_social"
                         [(ngModel)]="clientSelected.raison_social"
                       />
@@ -266,7 +266,7 @@
                         type="adresse"
                         class="form-control editFont"
                         id="exampleFormControlInput1"
-                        placeholder="Adresse"
+                        placeholder="Address"
                         formControlName="adresse"
                         [(ngModel)]="clientSelected.adresse"
                       />
@@ -276,7 +276,7 @@
                         type="email"
                         class="form-control editFont"
                         id="exampleFormControlInput1"
-                        placeholder="nom@example.com"
+                        placeholder="test@example.com"
                         formControlName="email"
                         [(ngModel)]="clientSelected.email"
                       />
@@ -286,7 +286,7 @@
                         type="telephone"
                         class="form-control editFont"
                         id="exampleFormControlInput1"
-                        placeholder="Téléphone"
+                        placeholder="Phone Number"
                         formControlName="telephone"
                         [(ngModel)]="clientSelected.telephone"
                       />
@@ -297,7 +297,7 @@
                         class="btn btn-outline-default"
                         (click)="onSubmitEdit()"
                       >
-                        Confirmer
+                        Confirm
                       </button>
                     </td>
                   </tr>

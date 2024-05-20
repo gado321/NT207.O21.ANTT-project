@@ -31,10 +31,10 @@ export class UserService {
    }
 
    getUsers() {
-     return this.http.get<User[]>(this.urlUsers)
+     return this.http.get<User[]>(this.urlUsers + '/get')
    }
    addUser(data) {
-     return this.http.post<User>(this.urlUsers + 123, data)
+     return this.http.post<User>(this.urlUsers, data)
    }
    deleteUser(id) {
      return this.http.delete(this.urlUsers + id)

@@ -8,19 +8,19 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
 
   urlApiWeather: string
-  urlApiCrackend: string
+  urlApiCrakend: string
 
 
 
   constructor(private http: HttpClient) {
     // this.urlApiWeather = environment.urlApiWeather
-    this.urlApiCrackend = environment.urlApiCrackend
+    this.urlApiCrakend = environment.urlApiCrakend
 
    }
 
 
    getWeather() {
-     return this.http.get<any>(this.urlApiCrackend)
+     return this.http.get<any>(this.urlApiCrakend)
 }
 
 }
