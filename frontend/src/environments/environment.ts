@@ -16,10 +16,10 @@ export const environment = {
   // urlUpdateUser: "http://localhost:4000/api/users/update/",
   // API
   urlApiCrakend: "http://localhost:8099/",
-  urlAddRabbit: "http://localhost:8099/produce",
+  urlAddRabbit: "http://localhost:8099/produce",  
 
   //clients
-  urlClients: "http://localhost:8099/clients/",
+  urlClients: "http://localhost:8099/clients",
   // urlGetClients: "http://localhost:3000/api/addclients",
   // urlClient: "http://localhost:3000/clients/",
   // urlAddClient: "http://localhost:3000/api/clients/add",
@@ -27,7 +27,7 @@ export const environment = {
   // urlUpdateClient: "http://localhost:3000/api/clients/update/",
 
   //produits
-  urlProduits: "http://localhost:8099/products/",
+  urlProduits: "http://localhost:8099/products",
 };
 
 /*

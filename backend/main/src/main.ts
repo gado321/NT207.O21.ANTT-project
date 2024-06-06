@@ -10,10 +10,5 @@ async function bootstrap() {
     origin:['http://localhost:4200','http://localhost:8099']
   })
   app.listen(3001)
-
- 
-  
-
- 
 }
 bootstrap();

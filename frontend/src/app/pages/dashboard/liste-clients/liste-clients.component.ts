@@ -40,6 +40,7 @@ export class ListeClientsComponent implements OnInit {
   clients: Client[] = [];
   // public loading: boolean = false;
   private idClient: number;
+  public displayText: string = '';
   public datasets: any;
   public data: any;
   public salesChart;
@@ -198,6 +199,21 @@ export class ListeClientsComponent implements OnInit {
       setTimeout(() => {
         this.listClient();
       }, 500);
+    });
+  }
+
+  public XSSDemo() {
+    this.clientService.searchClient().subscribe({
+      next: (response) => {
+        // Extracting the 'data' key from the response
+        this.displayText = response.payload; // Assume response is already the correct structure
+      },
+      error: (error) => {
+        console.error('Error fetching text:', error);
+      },
+      complete: () => {
+        console.log('Text fetch completed');
+      }
     });
   }
 

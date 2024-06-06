@@ -35,7 +35,7 @@ export class UserService {
           this.httpService
             .post(
               `https://dev-xcec5wzp0vxn0k3w.us.auth0.com/oauth/token`,
-              `{"client_id":"${process.env.CLIENT_ID}","client_secret":"${process.env.CLIENT_SECRET}","audience":"api-gateway-demo","grant_type":"client_credentials"}`,
+              `{"client_id":"${process.env.CLIENT_ID}","client_secret":"${process.env.CLIENT_SECRET}","audience":"http://localhost","grant_type":"client_credentials"}`,
               { headers: { 'content-type': 'application/json' } },
             )
             .subscribe(response => {
@@ -49,7 +49,6 @@ export class UserService {
       };
       token = await tokenReturn();
       let objRes = Object.assign({
-        user,
         token,
       });
 

@@ -89,20 +89,24 @@ public clientsWithAdd$ = merge(
   shareReplay(1)
 )
   getClients() {
-   return  this.http.get<any>(this.urlClients + 123).pipe(
+   return  this.http.get<any>(this.urlClients).pipe(
     tap(res => console.log(res))
    )
   }
 
+  searchClient() {
+    return  this.http.get<any>(this.urlClients + '/search')
+  }
+
   addClient(data) {
-    return this.http.post<Client>(this.urlClients + 123, data)
+    return this.http.post<Client>(this.urlClients, data)
   }
   editClient(data) {
-    return this.http.put<Client>(this.urlClients + data.id, data)
+    return this.http.put<Client>(this.urlClients + '/' + data.id, data)
   }
 
   deleteClient(id) {
-    return this.http.delete<any>(this.urlClients + id)
+    return this.http.delete<any>(this.urlClients + '/' + id)
   }
   addRabbit(data) {
     return this.http.post<Client>(this.urlAddRabbit, data)

@@ -16,17 +16,17 @@ export class ProduitsService {
 
 
   getProduits() {
-   return  this.http.get<any>(this.urlProduits + 123)
+   return  this.http.get<any>(this.urlProduits)
   }
 
   addProduit(data) {
-    return this.http.post<Produit>(this.urlProduits + 123, data)
+    return this.http.post<Produit>(this.urlProduits, data)
   }
   editProduit(data) {
-    return this.http.put<Produit>(this.urlProduits + data.id, data)
+    return this.http.put<Produit>(this.urlProduits + '/' + data.id, data)
   }
 
   deleteProduit(id) {
-    return this.http.delete<any>(this.urlProduits + id)
+    return this.http.delete<any>(this.urlProduits + '/' + id)
   }
 }

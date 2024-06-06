@@ -23,7 +23,7 @@ export class Product {
   @Column()
   price: string;
   
- @ManyToOne(type => Client, client => client.products)
+  @ManyToOne(type => Client, client => client.products, { eager: true })
   client: Client;
 
  

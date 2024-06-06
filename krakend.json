@@ -3,7 +3,7 @@
   "host": ["http://localhost:8099"],
   "extra_config": {
     "github_com/devopsfaith/krakend-cors": {
-      "allow_origins": ["*"],
+      "allow_origins": [ "http://localhost:4200" ],
       "expose_headers": ["Content-Length"],
       "max_age": "12h",
       "allow_methods": ["GET", "POST", "PUT", "DELETE"],
@@ -14,6 +14,12 @@
         "x-access-token"
       ],
       "allow_credentials": true
+    },
+    "telemetry/logging": {
+      "level": ["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"],
+      "prefix": "[KRAKEND]",
+      "syslog": false,
+      "stdout": true
     }
   },
   "timeout": "20000ms",
@@ -23,24 +29,19 @@
 
   "endpoints": [
     {
-      "endpoint": "/clients/{id}",
+      "endpoint": "/clients",
       "headers_to_pass": ["Authorization", "Content-Type", "Content-Length", "Accept"],
       "method": "GET",
       "concurrent_calls": 3,
       "output_encoding": "json-collection",
       "extra_config": {
-        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
-          "maxRate": 50,
-          "clientMaxRate": 5,
-          "strategy": "ip"
-        },
-
-        "github.com/devopsfaith/krakend-jose/validator": {
+        "auth/validator": {
           "alg": "RS256",
-          "audience": ["http://localhost:4200"],
-          "jwk-url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
-          "disable_jwk_security": true
-        }
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        } 
       },
 
       "backend": [
@@ -49,24 +50,51 @@
           "url_pattern": "/api/clients",
 
           "method": "GET",
-          "host": ["http://localhost:4000", "http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:4200"],
+          "host": ["http://10.0.139.52:3000"],
           "is_collection": true
         }
       ]
     },
 
     {
-      "endpoint": "/clients/{id}",
+      "endpoint": "/clients",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "POST",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        },
+        "security/http": {
+          "browser_xss_filter": true
+        }
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/clients/add",
 
           "method": "POST",
-          "host": ["http://localhost:3000"]
+          "host": ["http://10.0.139.52:3000"] 
+        }
+      ]
+    },
+    {
+      "endpoint": "/clients/search",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+
+      "backend": [
+        {
+          "encoding": "json-collection",
+          "url_pattern": "/api/clients/search",
+
+          "method": "GET",
+          "host": ["http://10.0.139.52:3000"]
         }
       ]
     },
@@ -75,13 +103,22 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "PUT",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/clients/edit/{id}",
 
           "method": "PUT",
-          "host": ["http://localhost:3000"]
+          "host": ["http://10.0.139.52:3000"]
         }
       ]
     },
@@ -90,13 +127,69 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "DELETE",
       "output_encoding": "string",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "string",
           "url_pattern": "/api/clients/delete/{id}",
 
           "method": "DELETE",
-          "host": ["http://localhost:3000"]
+          "host": ["http://10.0.139.52:3000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/clients/list/{clientId}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+      "backend": [
+        {
+          "url_pattern": "/api/clients/{clientId}",
+
+          "host": ["http://10.0.139.52:3000"],
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "shadow": true
+            }
+          }
+        },
+        {
+          "url_pattern": "/api/products/client/{clientId}",
+
+          "host": ["http://10.0.139.52:3002"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/git/{user}",
+      "backend": [
+        {
+          "host": ["https://api.github.com"],
+          "url_pattern": "/users/{user}",
+          "allow": [
+            "avatar_url",
+            "name",
+            "company",
+            "blog",
+            "location",
+            "mail",
+            "hireable",
+            "followers",
+            "public_repos",
+            "public_gists"
+          ],
+          "mapping": {
+            "blog": "website"
+          },
+          "group": "user"
         }
       ]
     },
@@ -118,23 +211,26 @@
           "url_pattern": "/api/users",
 
           "method": "GET",
-          "host": ["http://localhost:4000"],
+          "host": ["http://10.0.139.52:4000"],
           "is_collection": "true"
         }
       ]
     },
     {
-      "endpoint": "/users/{id}",
+      "endpoint": "/users/register",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "POST",
       "output_encoding": "json",
+      "extra_config": {
+        
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/users/register",
 
           "method": "POST",
-          "host": ["http://localhost:4000"]
+          "host": ["http://10.0.139.52:4000"]
         }
       ]
     },
@@ -143,13 +239,22 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "PUT",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/users/update/{id}",
 
           "method": "PUT",
-          "host": ["http://localhost:4000"]
+          "host": ["http://10.0.139.52:4000"]
         }
       ]
     },
@@ -158,13 +263,22 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "DELETE",
       "output_encoding": "string",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "string",
           "url_pattern": "/api/users/delete/{id}",
 
           "method": "DELETE",
-          "host": ["http://localhost:4000"]
+          "host": ["http://10.0.139.52:4000"]
         }
       ]
     },
@@ -172,17 +286,34 @@
       "endpoint": "/users/login",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "POST",
+      "extra_config": {
+        "security/bot-detector": {
+            "allow": ["MyAndroidClient/1.0", "Pingdom.com_bot_version_1.1"],
+            "deny": ["a", "b"],
+            "patterns": [
+                "(Pingdom.com_bot_version_).*",
+                "(facebookexternalhit)/.*"
+            ],
+            "cache_size": 10000,
+            "empty_user_agent_is_bot": true
+        },
+        "extra_config": {
+          "backend/http": {
+              "return_error_msg": true
+          }
+        }
+      },
       "backend": [
         {
           "url_pattern": "/api/users/login",
 
           "method": "POST",
-          "host": ["http://localhost:4000"]
+          "host": ["http://10.0.139.52:4000"]
         }
       ]
     },
     {
-      "endpoint": "/products/{id}",
+      "endpoint": "/products",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "GET",
       "output_encoding": "json-collection",
@@ -198,55 +329,42 @@
           "encoding": "json-collection",
           "url_pattern": "/api/products",
           "extra_config": {
-            "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+            "qos/circuit-breaker": {
               "interval": 60,
               "timeout": 10,
-              "maxErrors": 1,
+              "max_errors": 1,
               "name": "cb-allproducts-1",
-              "logStatusChange": true
+              "log_status_change": true
             }
           },
 
           "method": "GET",
-          "host": ["http://localhost:3002"],
+          "host": ["http://10.0.139.52:3002"],
           "is_collection": "true"
         }
       ]
     },
     {
-      "endpoint": "/clients/list/{clientId}",
-      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/api/clients/{clientId}",
-
-          "host": ["http://localhost:3000"],
-          "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
-              "shadow": true
-            }
-          }
-        },
-        {
-          "url_pattern": "/api/products/client/{clientId}",
-
-          "host": ["http://localhost:3002"]
-        }
-      ]
-    },
-    {
-      "endpoint": "/products/{id}",
+      "endpoint": "/products",
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "POST",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/products/add",
 
           "method": "POST",
-          "host": ["http://localhost:3002"]
+          "host": ["http://10.0.139.52:3002"]
         }
       ]
     },
@@ -255,13 +373,22 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "PUT",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "json",
           "url_pattern": "/api/products/edit/{id}",
 
           "method": "PUT",
-          "host": ["http://localhost:3002"]
+          "host": ["http://10.0.139.52:3002"]
         }
       ]
     },
@@ -270,13 +397,22 @@
       "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
       "method": "DELETE",
       "output_encoding": "string",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["http://localhost"],
+          "jwk_url": "https://dev-xcec5wzp0vxn0k3w.us.auth0.com/.well-known/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "encoding": "string",
           "url_pattern": "/api/products/delete/{id}",
 
           "method": "DELETE",
-          "host": ["http://localhost:3002"]
+          "host": ["http://10.0.139.52:3002"]
         }
       ]
     },

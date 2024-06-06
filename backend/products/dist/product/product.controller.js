@@ -55,7 +55,6 @@ let ProductController = class ProductController {
 };
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -77,7 +76,6 @@ __decorate([
 ], ProductController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -94,7 +92,6 @@ __decorate([
 ], ProductController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

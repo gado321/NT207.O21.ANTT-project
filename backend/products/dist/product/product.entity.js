@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => client_entity_1.Client, client => client.products),
+    (0, typeorm_1.ManyToOne)(type => client_entity_1.Client, client => client.products, { eager: true }),
     __metadata("design:type", client_entity_1.Client)
 ], Product.prototype, "client", void 0);
 Product = __decorate([

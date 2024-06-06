@@ -11,7 +11,7 @@ export class ProductController {
    ) {}
 
   @Get()
-  @UseGuards(new AuthGuard())
+  //@UseGuards(new AuthGuard())
   async all() {
     let allproducts = this.productService.showAll();
     return allproducts;
@@ -36,7 +36,7 @@ export class ProductController {
   }
 
   @Get(':id')
-  @UseGuards(new AuthGuard())
+  //@UseGuards(new AuthGuard())
   async get(@Param('id') id:number ){
       return this.productService.read(id)
   }
@@ -52,7 +52,7 @@ export class ProductController {
   }
 
   @Delete('delete/:id')
-  @UseGuards(new AuthGuard())
+  //@UseGuards(new AuthGuard())
   async delete(@Param('id') id: number) {
     console.log(" id to delete");
     console.log(id)

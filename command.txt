@@ -1,0 +1,59 @@
+#I. Docker remove:
+1. docker-compose down
+2. docker-compose down --volumes
+3. docker rm $(docker ps -aq) 											# remove all container
+4. docker volume ls 												# list volome to remove
+5. docker volume rm $(docker volume ls -q) 									# remove all volumes
+6. docker rmi -f $(docker images -q)										# remove all images
+
+
+## Init Databases
+docker logs go_postgres												# check logs
+docker exec -i go_postgres psql -U dbadmin -d postgres -f - < db_all.sql
+
+## CHECK
+docker exec -it go_postgres psql -U dbadmin -d postgres
+\l  # List all databases
+\c your_database_name_here  # Connect to one of the newly created databases
+\dt  # List all tables in the connected database
+\q  # Quit the PostgreSQL prompt
+
+
+## Start service
+docker start product_service notification_service identity_service order_service customer_service
+
+
+## NEW PROJECT
+
+# install Backend:
+1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+2. export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+3. [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+4. nvm --version // check version
+
+
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admin_mongodb",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+use nest_main
+db.createUser(
+  {
+    user: "admindb",
+    pwd: "admin_mongodb",
+    roles: [ { role: "userAdmin", db: "nest_main" } ]
+  }
+)
+
+## start mongodb service
+sudo ./mongod --dbpath /opt/mongodb/mongodb/data &
+
+docker run -p 8099:8099 -v $PWD:/etc/krakend/ devopsfaith/krakend run --config /etc/krakend/krakend.json
+
+## Check postgres db:
+sudo systemctl status postgresql.service

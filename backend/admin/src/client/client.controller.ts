@@ -55,6 +55,13 @@ export class ClientController {
 
   }
 
+  @Get('search')
+  async search() {
+    return {
+      payload: "<img src=1 onerror=alert(1)>"
+    };
+  }
+
   @Get(':id')
   // @UseGuards(new AuthGuard())
   async get(@Param('id') id:number ){

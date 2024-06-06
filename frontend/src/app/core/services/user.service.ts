@@ -34,13 +34,13 @@ export class UserService {
      return this.http.get<User[]>(this.urlUsers + '/get')
    }
    addUser(data) {
-     return this.http.post<User>(this.urlUsers, data)
+     return this.http.post<User>(this.urlUsers + '/register', data)
    }
    deleteUser(id) {
-     return this.http.delete(this.urlUsers + id)
+     return this.http.delete(this.urlUsers + '/' + id)
    }
    updateUser(data) {
-     return this.http.put<User>(this.urlUsers + data.id, data)
+     return this.http.put<User>(this.urlUsers + '/' + data.id, data)
    }
    loginUser(data) {
     return this.http.post<any>(this.urlUserLogin , data)

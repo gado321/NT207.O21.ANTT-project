@@ -116,13 +116,46 @@
         <div class="container-fluid">
           <div class="row mt-5">
             <div class="col-xl-4">
-              <div class="search">Search</div>
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="clientFilter"
-                (ngModelChange)="filterChange($event)"
-              />
+              <!-- <div class="search">Search</div>
+              <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="XSSDemo()"
+                    >
+                      Demo
+                    </button> -->
+              <!-- <div *ngIf="displayText" class="mt-2">{{ displayText }}</div> -->
+              <h1>Client Data from API</h1>
+              <div id="apiResponse">Loading data...</div>
+
+              <script>
+                  // Function to fetch data from the server
+                  function fetchData() {
+                      // Endpoint URL
+                      const url = 'http://10.0.139.52:8099/clients/search';
+
+                      // Making a GET request to the endpoint
+                      fetch(url)
+                          .then(response => {
+                              if (!response.ok) {
+                                  throw new Error('Network response was not ok');
+                              }
+                              return response.json(); // parsing JSON data from the response
+                          })
+                          .then(data => {
+                              // Displaying the data in the HTML element with id="apiResponse"
+                              document.getElementById('apiResponse').textContent = 'Data: ' + data.payload;
+                          })
+                          .catch(error => {
+                              // Handling errors, such as network errors
+                              console.error('There was a problem with the fetch operation:', error);
+                              document.getElementById('apiResponse').textContent = 'Failed to load data';
+                          });
+                  }
+
+                  // Call fetchData on page load
+                  window.onload = fetchData;
+              </script>
             </div>
           </div>
         </div>
